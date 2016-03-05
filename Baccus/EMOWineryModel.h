@@ -12,8 +12,8 @@
 
 #define RED_WINE_KEY @"Tinto"
 #define WHITE_WINE_KEY @"Blanco"
-#define OTHER_WINE_KEY @"Rosado"
-
+#define ROSE_WINE_KEY @"Rosado"
+#define CAVA_WINE_KEY @"Cava"
 
 
 @interface EMOWineryModel : NSObject

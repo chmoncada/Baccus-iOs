@@ -73,7 +73,7 @@
                                         } else {
                                             [self.whiteWines addObject:wine];
                                         }
-                                    } else {
+                                    } else if([wine.type isEqualToString:ROSE_WINE_KEY] || [wine.type isEqualToString:CAVA_WINE_KEY]){
                                         if(!self.otherWines){
                                             self.otherWines = [NSMutableArray arrayWithObject:wine];
                                         } else {
