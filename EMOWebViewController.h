@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIWebView *browser;
 @property (weak,nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
--(id) initWIthModel: (EMOWineModel *) aModel;
+-(id) initWithModel: (EMOWineModel *) aModel;
 
 
 @end

@@ -11,7 +11,9 @@
 
 @implementation EMOWebViewController
 
--(id) initWIthModel: (EMOWineModel *) aModel {
+#pragma mark - Init
+
+-(id) initWithModel: (EMOWineModel *) aModel {
 
     if(self = [super initWithNibName:nil
                               bundle:nil]) {
@@ -22,10 +24,12 @@
     return self;
 }
 
+#pragma mark - View Lifecycle
+
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self displayURL: self.model.wineCompanyWeb];
+    
     
     // Alta en notificacion
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -34,19 +38,10 @@
                    name:NEW_WINE_NOTIFICACION_NAME
                  object:nil];
     
+    [self displayURL]; // sincroniza la vista
     
 }
 
--(void) wineDidChange: (NSNotification *) notificacion {
-    NSDictionary *dict = [notificacion userInfo];
-    EMOWineModel *newWine = [dict objectForKey:WINE_KEY];
-    
-    //Actualizar el modelo
-    
-    self.model = newWine;
-    [self displayURL:self.model.wineCompanyWeb];
-    
-}
 
 -(void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -59,6 +54,20 @@
 }
 
 
+#pragma mark - Notificaciones
+
+-(void) wineDidChange: (NSNotification *) notificacion {
+    NSDictionary *dict = [notificacion userInfo];
+    EMOWineModel *newWine = [dict objectForKey:WINE_KEY];
+    
+    //Actualizar el modelo
+    
+    self.model = newWine;
+    [self displayURL];
+    
+}
+
+
 
 #pragma mark - UIWebViewDelegate
 -(void) webViewDidFinishLoad:(UIWebView *)webView{
@@ -68,13 +77,13 @@
 
 #pragma mark - Utilities
 
--(void) displayURL: (NSURL *) aURL{
+-(void) displayURL{
     
     self.browser.delegate = self;
-    self.activityView.hidden = NO;
-    [self.activityView startAnimating];
+    //self.activityView.hidden = NO;
+    // [self.activityView startAnimating];
     
-    [self.browser loadRequest:[NSURLRequest requestWithURL:aURL]];
+    [self.browser loadRequest:[NSURLRequest requestWithURL:self.model.wineCompanyWeb]];
 }
 
 

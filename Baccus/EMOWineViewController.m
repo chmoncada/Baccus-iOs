@@ -29,7 +29,7 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self syncModelWithView];
+    
     
     self.edgesForExtendedLayout = UIRectEdgeNone;  // para que la vista no se extienda del todo
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.5
@@ -43,6 +43,7 @@
         
     }
     
+    [self syncModelWithView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,10 +54,10 @@
 #pragma mark - Actions
 
 -(IBAction)displayWeb:(id)sender{
-    // NSLog(@"Go to %@", self.model.wineCompanyWeb);
+    
     //Crear un webVC
     
-    EMOWebViewController *webVC = [[EMOWebViewController alloc] initWIthModel:self.model];
+    EMOWebViewController *webVC = [[EMOWebViewController alloc] initWithModel:self.model];
     
     // Hacemos un push
     [self.navigationController pushViewController:webVC

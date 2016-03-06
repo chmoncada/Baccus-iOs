@@ -69,11 +69,11 @@
 
 -(id) initWithDictionary: (NSDictionary *)aDict{
     return [self initWithName:[aDict objectForKey:@"name"]
-              wineCompanyName:[aDict objectForKey:@"wineCompanyName"]
+              wineCompanyName:[aDict objectForKey:@"company"]
                          type:[aDict objectForKey:@"type"]
                        origin:[aDict objectForKey:@"origin"]
                        grapes:[self extractGrapesFromJSONArray:[aDict objectForKey:@"grapes"]]
-               wineCompanyWeb:[aDict objectForKey:@"wineCompanyWeb"]
+               wineCompanyWeb:[NSURL URLWithString:[aDict objectForKey:@"wine_web"]]
                         notes:[aDict objectForKey:@"notes"]
                        rating:[[aDict objectForKey:@"rating"] intValue]
                      photoURL:[NSURL URLWithString:[aDict objectForKey:@"picture"]]];
