@@ -20,14 +20,15 @@
 
 @property (readonly, nonatomic) NSUInteger redWineCount;
 @property (readonly, nonatomic) NSUInteger whiteWineCount;
-@property (readonly, nonatomic) NSUInteger otherWineCount;
-
+@property (readonly, nonatomic) NSUInteger roseWineCount;
+@property (readonly, nonatomic) NSUInteger cavaWineCount;
 
 -(EMOWineModel *) redWineAtIndex: (NSUInteger) index;
 
 -(EMOWineModel *) whiteWineAtIndex: (NSUInteger) index;
 
--(EMOWineModel *) otherWineAtIndex: (NSUInteger) index;
+-(EMOWineModel *) roseWineAtIndex: (NSUInteger) index;
 
+-(EMOWineModel *) cavaWineAtIndex: (NSUInteger) index;
 
 @end

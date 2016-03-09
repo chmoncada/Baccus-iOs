@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Availability.h>
+
+#define IS_PHONE UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

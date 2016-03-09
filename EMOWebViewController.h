@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "EMOWineModel.h"
+
+#define IS_PHONE UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone
+
 @interface EMOWebViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong,nonatomic) EMOWineModel *model;

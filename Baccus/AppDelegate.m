@@ -20,35 +20,29 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    [self customizeAppearance];
     
     // Creamos el modelo
-    EMOWineryModel *winery = [[EMOWineryModel alloc]init];
+    // EMOWineryModel *winery = [[EMOWineryModel alloc]init];
     
     // Creamos los controladores
-   EMOWineryTableViewController *wineryVC = [[EMOWineryTableViewController alloc] initWithModel:winery
-                                                                                          style:UITableViewStylePlain];
-    EMOWineViewController *wineVC = [[EMOWineViewController alloc] initWithModel:[wineryVC lastSelectedWine]];
+    UIViewController *rootVC = nil;
+    if(!IS_PHONE){
+        //Tablet
+        rootVC = [self rootViewControllerForPadWithModel];
+    }
+    else {
+        rootVC = [self rootViewControllerForPhoneWithModel];
+    }
     
     
-    // Creamos los Navigation
-    UINavigationController *wineryNav = [[UINavigationController alloc] initWithRootViewController:wineryVC];
-    UINavigationController *wineNav = [[UINavigationController alloc]initWithRootViewController:wineVC];
-    
-    // Creamos el combinador: SplitView
-    
-    UISplitViewController *splitVC = [[UISplitViewController alloc] init];
-    splitVC.viewControllers = @[wineryNav,wineNav];
-    
-    //Asignamos delegado
-    
-    splitVC.delegate = wineVC;
-    wineryVC.delegate = wineVC;
     
     
     // Lo asignamos como controlador raiz
-    self.window.rootViewController = splitVC;
+    self.window.rootViewController = rootVC;
     
     
     [self.window makeKeyAndVisible];
@@ -77,5 +71,89 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - rootViewController para dispositivos
+
+-(UIViewController *)rootViewControllerForPadWithModel {
+  
+    EMOWineryTableViewController *wineryVC = [[EMOWineryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    EMOWineViewController *wineVC = [[EMOWineViewController alloc] initWithModel:[wineryVC lastSelectedWine]];
+    
+    
+    // Creamos los Navigation
+    UINavigationController *wineryNav = [[UINavigationController alloc] initWithRootViewController:wineryVC];
+    UINavigationController *wineNav = [[UINavigationController alloc]initWithRootViewController:wineVC];
+    
+    // Creamos el combinador: SplitView
+    
+    UISplitViewController *splitVC = [[UISplitViewController alloc] init];
+    splitVC.viewControllers = @[wineryNav,wineNav];
+    
+    //Asignamos delegado
+    
+    splitVC.delegate = wineVC;
+    wineryVC.delegate = wineVC;
+    
+    return splitVC;
+}
+
+-(UIViewController *)rootViewControllerForPhoneWithModel {
+    
+    EMOWineryTableViewController *wineryVC = [[EMOWineryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    // Creamos el combinador
+    UINavigationController *wineryNav = [[UINavigationController alloc] initWithRootViewController:wineryVC];
+    
+    //Asignamos delegado
+    
+    wineryVC.delegate = wineryVC;
+    
+    return wineryNav;
+}
+
+#pragma mark - Customization
+
+-(void) customizeAppearance{
+    UIColor *oldBurgundy = [UIColor colorWithRed:0.624
+                                        green:0.271
+                                         blue:0.271
+                                        alpha:1.0];
+    
+    //Fondo de la barra de navegacion
+    if(IS_PHONE){
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBarBackgroundPortrait"] forBarMetrics:UIBarMetricsDefault];
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBarBackgroundLandscape"] forBarMetrics:UIBarMetricsCompact];
+    }
+    else {
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBarBackgroundPortraitiPad"] forBarMetrics:UIBarMetricsDefault];
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBarBackgroundLandscapeiPad"] forBarMetrics:UIBarMetricsCompact];
+    }
+    
+    //Apariencia de texto del Navigation Bar (Fuente y color)
+    NSShadow *shadow = [[NSShadow alloc]init];
+    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    shadow.shadowOffset = CGSizeMake(0.0f,1.0f);
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                           NSFontAttributeName: [UIFont fontWithName:@"Valentina" size:20],
+                                                           NSShadowAttributeName:shadow }];
+    
+    //Aparienvia del texto del boton de retroceso
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                           NSShadowAttributeName: shadow,
+                                                           NSFontAttributeName: [UIFont fontWithName:@"Valentina" size:12]} forState:UIControlStateNormal];
+    
+    //Color de los separadores de seccion de las tablas
+    [[UITableViewHeaderFooterView appearance] setTintColor: oldBurgundy];
+    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UITableViewHeaderFooterView class]]] setTextColor:[UIColor whiteColor]];
+
+    // Botón de hacia atrás personalizado
+    UIImage *backBtn = [UIImage imageNamed:@"backBtn"];
+    backBtn = [backBtn resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backBtn
+                                                      forState:UIControlStateNormal
+                                                    barMetrics:UIBarMetricsDefault];
+    
+}
+
 
 @end

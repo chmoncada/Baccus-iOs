@@ -29,6 +29,7 @@
     return self;
 }
 
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,34 +42,64 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.5
-                                                                           green:0
-                                                                            blue:0.13
-                                                                           alpha:0];
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (!self.model) {
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        indicator.hidesWhenStopped = YES;
+        indicator.frame = CGRectMake(self.view.frame.size.width / 2 - 37 / 2, self.view.frame.size.height / 2 - 37 / 2, 37, 37);
+        [indicator startAnimating];
+        
+        // como descendemos de UITableViewController nos da muy poca flexibilidad a la hora de añadir subvistas, lo añadimos como cabecera de la tabla
+        self.tableView.tableHeaderView = indicator;
+        
+        
+        
+        [self performSelector:@selector(loadModel) withObject:nil afterDelay:0.1];
+    }
 }
 
-/* - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}*/
+
+- (void)loadModel
+{
+    
+    self.model = [[EMOWineryModel alloc] init];
+    self.tableView.tableHeaderView = nil;
+    [self.tableView reloadData];
+    
+    // Avisar al delegado
+    //[self.delegate wineryTableViewController:self didSelectWine:[self lastSelectedWine]];
+}
+
+- (NSString *)title
+{
+    return @"Baccus";
+}
+
 
 #pragma mark - Table view data source
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if(section == RED_WINE_SECTION){
-        return @"Red Wines";
+        return @"Vinos Tintos";
     } else if (section == WHITE_WINE_SECTION){
-        return @"White Wines";
+        return @"Vinos Blancos";
+    } else if (section == ROSE_WINE_SECTION){
+        return @"Vinos Rosados";
     } else {
-        return @"Other Wines";
+        return @"Cavas";
     }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-// return the number of sections
-    return 3;
+    // Return the number of sections.
+    if (self.model) {
+        return 4;
+    }
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -77,8 +108,10 @@
         return self.model.redWineCount;
     } else if (section == WHITE_WINE_SECTION){
         return self.model.whiteWineCount;
+    } else if (section == ROSE_WINE_SECTION){
+        return self.model.roseWineCount;
     } else {
-        return self.model.otherWineCount;
+        return self.model.cavaWineCount;
     }
     
 }
@@ -100,15 +133,36 @@
     
     EMOWineModel *wine = [self wineForIndexPath:indexPath];
     
+    // Aplicamos diseño
+    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell_bg"]];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.font = [UIFont fontWithName:@"Valentina" size:18];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"Valentina" size:16];
     
     // Sincronizar celda (vista) y modelo (vino)
-    
+    if(wine.photo){
     cell.imageView.image = wine.photo;
+    } else {
+        cell.imageView.image = [UIImage imageNamed:@"cell_icon_bg"];
+    }
     cell.textLabel.text = wine.name;
     cell.detailTextLabel.text = wine.wineCompanyName;
     
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // devolvemos el tamaño al mismo que el background que hemos puesto
+    return 72;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    // devolvemos el tamaño de la imagen de la cabecera
+    return 30;
 }
 
 /*
@@ -193,8 +247,10 @@
         wine=[self.model redWineAtIndex:indexPath.row];
     } else if (indexPath.section == WHITE_WINE_SECTION){
         wine = [self.model whiteWineAtIndex:indexPath.row];
+    } else if (indexPath.section == ROSE_WINE_SECTION){
+        wine = [self.model roseWineAtIndex:indexPath.row];
     } else {
-        wine = [self.model otherWineAtIndex:indexPath.row];
+        wine = [self.model cavaWineAtIndex:indexPath.row];
     }
     
     return wine;
@@ -243,6 +299,20 @@
     
     // devolvemos el vino
     return [self wineForIndexPath:indexPath];
+}
+
+#pragma mark - WineryTableViewControllerDelegate
+
+-(void) wineryTableViewController: (EMOWineryTableViewController *)wineryVC
+                    didSelectWine: (EMOWineModel *) aWine{
+    
+    //Crea el controlador
+    EMOWineViewController *wineVC = [[EMOWineViewController alloc]initWithModel:aWine];
+    
+    //Hacer el push
+    [self.navigationController pushViewController:wineVC animated:YES];
+    
+    
 }
 
 @end

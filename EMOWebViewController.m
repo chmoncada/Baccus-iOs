@@ -9,6 +9,10 @@
 #import "EMOWebViewController.h"
 #import "EMOWineryTableViewController.h"
 
+@interface EMOWebViewController ()
+
+@end
+
 @implementation EMOWebViewController
 
 #pragma mark - Init
@@ -19,7 +23,7 @@
                               bundle:nil]) {
         _model=aModel;
         
-        self.title = @"Web";
+        self.title = aModel.wineCompanyName;
     }
     return self;
 }
@@ -29,6 +33,9 @@
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    if (IS_PHONE) {
+        self.browser.scalesPageToFit = YES;
+    }
     
     
     // Alta en notificacion
@@ -70,6 +77,12 @@
 
 
 #pragma mark - UIWebViewDelegate
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self.activityView setHidden:NO];
+    [self.activityView startAnimating];
+}
+
 -(void) webViewDidFinishLoad:(UIWebView *)webView{
     [self.activityView stopAnimating];
     [self.activityView setHidden:YES];

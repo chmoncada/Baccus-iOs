@@ -11,7 +11,8 @@
 
 #define RED_WINE_SECTION 0
 #define WHITE_WINE_SECTION 1
-#define OTHER_WINE_SECTION 2
+#define ROSE_WINE_SECTION 2
+#define CAVA_WINE_SECTION 3
 #define NEW_WINE_NOTIFICACION_NAME @"newWine"
 #define WINE_KEY @"wine"
 
@@ -24,7 +25,7 @@
 @end
 
 
-@interface EMOWineryTableViewController : UITableViewController
+@interface EMOWineryTableViewController : UITableViewController <WineryTableViewControllerDelegate>
 
 @property (nonatomic, strong) EMOWineryModel *model;
 @property (nonatomic,weak) id<WineryTableViewControllerDelegate> delegate;
