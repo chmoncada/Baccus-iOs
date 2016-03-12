@@ -17,7 +17,7 @@
 @property (weak,nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak,nonatomic) IBOutlet UILabel *originLabel;
 @property (weak,nonatomic) IBOutlet UILabel *grapesLabel;
-@property (weak,nonatomic) IBOutlet UILabel *notesLabel;
+@property (weak,nonatomic) IBOutlet UITextView *notesLabel;
 @property (weak,nonatomic) IBOutlet UIImageView *photoView;
 
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *ratingViews;

@@ -9,6 +9,10 @@
 #import "EMOWineViewController.h"
 #import "EMOWebViewController.h"
 
+#define kCustomFontHeader           [UIFont fontWithName:@"Valentina" size:17]
+#define kCustomFontSubheader        [UIFont fontWithName:@"Valentina" size:15]
+#define kCustomFontRegular          [UIFont fontWithName:@"Valentina" size:12]
+
 @implementation EMOWineViewController
 
 -(id) initWithModel: (EMOWineModel *) aModel{
@@ -46,6 +50,16 @@
     [self syncModelWithView];
 }
 
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    self.nameLabel.font = kCustomFontHeader;
+    self.wineryNameLabel.font = kCustomFontSubheader;
+    self.typeLabel.font = kCustomFontSubheader;
+    self.originLabel.font = kCustomFontSubheader;
+    self.grapesLabel.font = kCustomFontSubheader;
+    self.notesLabel.font = kCustomFontRegular;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -77,8 +91,24 @@
     
     [self displayRating:self.model.rating];
     
-    [self.notesLabel setNumberOfLines:0];
+    /*
+    CODIGO PARA ACTIVAR EL BOTON DE WEB, HAY QUE DEFINIR EL WEBBUTTON y Enlazarlo para que funcione
+    NSLog(@"web: %@", self.model.wineCompanyWeb);
+    if (self.model.wineCompanyWeb == nil) {
+        self.webButton.enabled = NO;
+    }else{
+        self.webButton.enabled = YES;
+    }
+    */
     
+    self.title = self.model.name;
+    
+    // ajustamos los labels según su tamaño o reducimos la fuente en su caso ya que en el iPhone puede ocurrir que no quepa todo el texto
+    self.nameLabel.adjustsFontSizeToFitWidth = YES;
+    self.wineryNameLabel.adjustsFontSizeToFitWidth = YES;
+    self.typeLabel.adjustsFontSizeToFitWidth = YES;
+    self.originLabel.adjustsFontSizeToFitWidth = YES;
+    [self.grapesLabel sizeToFit];
     
 }
 

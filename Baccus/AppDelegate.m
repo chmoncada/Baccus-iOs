@@ -119,6 +119,8 @@
                                          blue:0.271
                                         alpha:1.0];
     
+    
+    
     //Fondo de la barra de navegacion
     if(IS_PHONE){
         [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBarBackgroundPortrait"] forBarMetrics:UIBarMetricsDefault];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -14,19 +14,27 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1hr-PA-1td">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1hr-PA-1td">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                 </webView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LRg-63-ZL5">
-                    <rect key="frame" x="366" y="493" width="37" height="37"/>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LRg-63-ZL5">
+                    <rect key="frame" x="282" y="281" width="37" height="37"/>
                     <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="LRg-63-ZL5" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2E5-8d-tqF"/>
+                <constraint firstAttribute="bottom" secondItem="1hr-PA-1td" secondAttribute="bottom" id="4dy-SZ-eaL"/>
+                <constraint firstItem="LRg-63-ZL5" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="6kZ-d9-FUp"/>
+                <constraint firstAttribute="trailing" secondItem="1hr-PA-1td" secondAttribute="trailing" id="KQY-Ol-3EC"/>
+                <constraint firstItem="1hr-PA-1td" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aj5-1Y-QeK"/>
+                <constraint firstItem="1hr-PA-1td" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="oZk-KB-rnm"/>
+            </constraints>
             <point key="canvasLocation" x="600" y="497"/>
         </view>
     </objects>
