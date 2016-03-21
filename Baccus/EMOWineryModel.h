@@ -16,7 +16,7 @@
 #define CAVA_WINE_KEY @"Cava"
 
 
-@interface EMOWineryModel : NSObject
+@interface EMOWineryModel : NSObject <NSURLSessionDownloadDelegate>
 
 @property (readonly, nonatomic) NSUInteger redWineCount;
 @property (readonly, nonatomic) NSUInteger whiteWineCount;

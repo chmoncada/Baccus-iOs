@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setDefaults];
-    
+    [self.tableView reloadData];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -48,14 +48,14 @@
     [super viewDidAppear:animated];
     
     if (!self.model) {
-        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        /*UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         indicator.hidesWhenStopped = YES;
         indicator.frame = CGRectMake(self.view.frame.size.width / 2 - 37 / 2, self.view.frame.size.height / 2 - 37 / 2, 37, 37);
         [indicator startAnimating];
         
         // como descendemos de UITableViewController nos da muy poca flexibilidad a la hora de añadir subvistas, lo añadimos como cabecera de la tabla
         self.tableView.tableHeaderView = indicator;
-        
+        */
         
         
         [self performSelector:@selector(loadModel) withObject:nil afterDelay:0.1];
@@ -67,7 +67,7 @@
 {
     
     self.model = [[EMOWineryModel alloc] init];
-    self.tableView.tableHeaderView = nil;
+    //self.tableView.tableHeaderView = nil;
     [self.tableView reloadData];
     
     // Avisar al delegado
