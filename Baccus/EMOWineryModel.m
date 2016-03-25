@@ -8,6 +8,7 @@
 
 #import "EMOWineryModel.h"
 
+
 @interface EMOWineryModel ()
 
 @property (strong,nonatomic) NSMutableArray *redWines;
@@ -199,6 +200,7 @@ didFinishDownloadingToURL:(NSURL *)location{
                 }
                 
             }
+            
         } else{
             // Se ha producido un error al parsear el JSON
             NSLog(@"Error al parsear JSON %@", error.localizedDescription);

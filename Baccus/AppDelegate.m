@@ -26,20 +26,17 @@
     [self customizeAppearance];
     
     // Creamos el modelo
-    // EMOWineryModel *winery = [[EMOWineryModel alloc]init];
+    EMOWineryModel *winery = [[EMOWineryModel alloc]init];
     
     // Creamos los controladores
     UIViewController *rootVC = nil;
-    if(!IS_PHONE){
+    if(!(IS_PHONE)){
         //Tablet
-        rootVC = [self rootViewControllerForPadWithModel];
+        rootVC = [self rootViewControllerForPadWithModel:winery];
     }
     else {
-        rootVC = [self rootViewControllerForPhoneWithModel];
+        rootVC = [self rootViewControllerForPhoneWithModel:winery];
     }
-    
-    
-    
     
     // Lo asignamos como controlador raiz
     self.window.rootViewController = rootVC;
@@ -74,9 +71,10 @@
 
 #pragma mark - rootViewController para dispositivos
 
--(UIViewController *)rootViewControllerForPadWithModel {
+-(UIViewController *)rootViewControllerForPadWithModel:(EMOWineryModel *) winery {
   
-    EMOWineryTableViewController *wineryVC = [[EMOWineryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    EMOWineryTableViewController *wineryVC = [[EMOWineryTableViewController alloc] initWithModel:winery style:UITableViewStylePlain];
     EMOWineViewController *wineVC = [[EMOWineViewController alloc] initWithModel:[wineryVC lastSelectedWine]];
     
     
@@ -97,9 +95,10 @@
     return splitVC;
 }
 
--(UIViewController *)rootViewControllerForPhoneWithModel {
+-(UIViewController *)rootViewControllerForPhoneWithModel:(EMOWineryModel *) winery {
     
-    EMOWineryTableViewController *wineryVC = [[EMOWineryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        
+    EMOWineryTableViewController *wineryVC = [[EMOWineryTableViewController alloc] initWithModel:winery style:UITableViewStylePlain];
     
     // Creamos el combinador
     UINavigationController *wineryNav = [[UINavigationController alloc] initWithRootViewController:wineryVC];
